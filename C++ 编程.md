@@ -61,14 +61,6 @@
 
 - 使用 gtest。
 
-### gtest
+## std::string_view::npos
 
-- `ASSERT_*` 版本产在失败，退出当前测试用例。
-
-- `EXPECT_*` 版本产生失败，不会退出当前测试用例。
-
-选择：失败后失败信息是否有意义，是否影响后续执行。
-
-<https://google.github.io/googletest/reference/testing.html>
-
-选择：用 `TEST_F` 替代 `TEST`。
+non-position

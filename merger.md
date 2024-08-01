@@ -156,6 +156,16 @@ goods_image_id = {goods_id}_{image_id}
 
 - AbtFromV3: 将版本 3 的特定字段映射到版本 2 的格式中。
 
+## config
+
+## launcher
+
+### async_content.h
+
+### launcher.cc
+
+### launcher.h
+
 ## 启动服务
 
 ### 本地

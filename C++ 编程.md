@@ -64,3 +64,9 @@
 ## std::string_view::npos
 
 non-position
+
+## std::string & std::string_view
+
+`std::string`: 进行动态内存分配。
+
+`std::string_view`: 不进行动态内存分配，只读。构造和复制几乎是即时的，因为它只是复制指针和长度。

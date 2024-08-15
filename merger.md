@@ -67,9 +67,17 @@ goods_image_id = {goods_id}_{image_id}
 
 这些配置被组织在一个统一的全局配置类 GlobalConfig 中，并通过 GlobalConfigNotifier 类实现了在系统运行时的初始化和更新。
 
-meta.h：存储配置信息变量。
+区分本地和线上
+
+- global_config 全局配置信息
+- meta 所有数据配置结构
+- holder 组织配置，解析
 
 ## entity
+
+数据团队生成数据，生成到 Redis 或 RocksDB，Entity 用来存储数据。
+
+将数据序列化后，将二进制数据填入到 entity 中。
 
 ### builder
 
@@ -79,6 +87,71 @@ builder：定义构建 entity 的基本配置，可以根据具体的业务场�
 
 list_entity：解析给定的 JSON 数据并填充 QueryProcessInfo 对象。
 
+### entity_builder
+
+level 0: 用户侧数据
+
+level 1: 商品侧数据
+
+KVEntityBuilder：从 Redis 中获取。
+
+ValuelessEntityBuilder：缺少 value 的 entityBuilder
+
+QPEntityBuilder：解析复杂查询，通过查询结果构建
+
+SimpleContextEntityBuilder：填充最初版本 context protobuf
+
+NestedContextEntityBuilder：填充新版本 protobuf
+
+ValuedEntityBuilder：构建 value 来自于内部计算或者模型计算的 Entity
+
+ListEntityBuilder：用于构建 ListEntity 类型
+
 ## launcher
 
 初始化以及启动相关服务。
+
+## session
+
+用于管理处理请求和生成响应的整个流程。
+它是一个通用的会话管理类，可以在具体的业务逻辑中通过指定 Request 和 Response 类型来实例化。
+这个类的主要功能包括接收请求、处理请求、管理流程、生成响应、记录日志等。
+
+AdaptInputAbt：兼容 abt 参数，进行参数适配以及过滤无关参数。
+
+OnRecvRequest() 方法是接收到请求后的主入口，负责初始化一些必要的字段（如 unique_request_id_），适配请求参数，并调用具体的请求处理逻辑。
+
+OnSendResponse() 方法在流程结束后调用，用于生成最终的响应。它还会记录一些相关的日志，并上报相关的监控指标。
+
+RunFlow() 方法启动整个流程的执行。它会初始化一个流程对象，并开始执行流程中的各个步骤。
+
+FlowCallback() 方法用于处理流程中的各个步骤，当一个步骤完成后，它会决定是否继续执行下一个步骤。
+
+### promotion 扶持
+
+Promote 方法：进行筛选和排序。
+
+DeDup 方法：用于去除重复的扶持项，主要基于 getter 获取的 SPU。
+
+### session_delegate
+
+一些基础接口和动态配置以及 entity_builder 调度。
+
+### session_base
+
+包括 session 管理、数据操作、日志记录、流处理等，为具体的业务逻辑提供了一个框架。
+
+### pid_adjuster
+
+pid 扶持策略。
+
+### supporter
+
+用于处理特定的支持（Promotion）操作。
+
+用于处理支持逻辑的工具类，主要用于在排序或筛选过程中进行流量扶持操作。
+
+## dispatcher
+
+设置 listener，visitor，语法解析器以及语法管理器。
+

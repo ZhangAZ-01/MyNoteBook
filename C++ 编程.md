@@ -70,3 +70,13 @@ non-position
 `std::string`: 进行动态内存分配。
 
 `std::string_view`: 不进行动态内存分配，只读。构造和复制几乎是即时的，因为它只是复制指针和长度。
+
+## std::numeric_limits<float>::lowest() && std::numeric_limits<float>::min()
+
+std::numeric_limits<float>::lowest(): 返回 float 类型的最小负值，即数值上最接近负无穷大的值。
+
+std::numeric_limits<float>::min(): 返回 float 类型的最小正值，即最接近零的正数值，但不包括零。
+
+### session_base
+
+

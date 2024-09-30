@@ -32,39 +32,9 @@
 - 实现函数回调。
 - 回调函数大多使用在异步编程。
 
-```C++
-class FeedsPairDedup {
- private:
-  using callback_t = std::function<void(pb_feeds_item_t*, pb_feeds_item_t*)>;
-}
+## `std::try_emplace`
 
-void FeedsPairDedup::Dedup(bool prepare_enabled, const std::vector<size_t>& ref_indexes, const callback_t& callback,pb_feeds_item_t* items, pb_feeds_item_t* output_items) {
-  if (prepare_enabled) {
-    // ...
-    callback(&from_items, output_items);
-  } else {
-    callback(items, output_items);
-  }
-}
-
-void FeedsPairDedup::Dedup_V1(bool prepare_enabled, const std::vector<size_t>& ref_indexes, pb_feeds_item_t* items,pb_feeds_item_t* output_items) {
-  Dedup(
-      prepare_enabled, ref_indexes,
-      [&](pb_feeds_item_t* from_items, pb_feeds_item_t* to_items) {
-        this->DeleteDuplicateItems_V1(from_items, to_items);
-      },
-      items, output_items);
-}
-
-void FeedsPairDedup::Dedup_V2(bool prepare_enabled, const std::vector<size_t>& ref_indexes, pb_feeds_item_t* items,pb_feeds_item_t* output_items) {
-  Dedup(
-      prepare_enabled, ref_indexes,
-      [&](pb_feeds_item_t* from_items, pb_feeds_item_t* to_items) {
-        this->DeleteDuplicateItems_V2(from_items, to_items);
-      },
-      items, output_items);
-}
-```
+- 用于向 map 中插入元素，先检测 key 是否存在，不存在则插入。
 
 ## 使用推荐
 
@@ -134,4 +104,25 @@ non-position
 
 ```C++
 using pb_feeds_items_t = google::protobuf::RepeatedPtrField<FeedsItem>;
+```
+
+## 常量指针转换成非常量指针
+
+对于使用了 `const auto&` 的变量，在赋值时可以强制类型转换成非常量指针后使用。
+
+```C++
+void FeedsGroupDedup::FetchCreativeIdByScore(const pb_feeds_item_t& items) {
+  for (const auto& ref_item : *ref_items_) {
+    uint64_t creative_id = items[ref_item.li].creatives(ref_item.ci).creative_id();
+    auto it = creative_id_2_index_.find(creative_id);
+    if (it == creative_id_2_index_.end()) {
+      creative_id_2_index_.try_emplace(creative_id, sorted_items_.size());
+      sorted_items_.emplace_back((RefItem*)&ref_item);
+    } else {
+      if (ref_item.score > sorted_items_[it->second]->score) {
+        sorted_items_[it->second] = (RefItem*)&ref_item;
+      }
+    }
+  }
+}
 ```

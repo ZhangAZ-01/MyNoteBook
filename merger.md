@@ -81,8 +81,17 @@ goods_image_id = {goods_id}_{image_id}
 - global_config 全局配置信息
 - meta 所有数据配置结构
 - holder 组织配置，解析
+区分本地和线上
+
+- global_config 全局配置信息
+- meta 所有数据配置结构
+- holder 组织配置，解析
 
 ## entity
+
+数据团队生成数据，生成到 Redis 或 RocksDB，Entity 用来存储数据。
+
+将数据序列化后，将二进制数据填入到 entity 中。
 
 数据团队生成数据，生成到 Redis 或 RocksDB，Entity 用来存储数据。
 

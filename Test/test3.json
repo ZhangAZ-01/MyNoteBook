@@ -1,0 +1,166 @@
+{
+  "label": "search_hub_prk_03",
+  "batch_size": 100,
+  "did_list": [
+    10049,
+    10078,
+    10068,
+    10002,
+    10050,
+    10060,
+    10061,
+    10063,
+    10075,
+    10070,
+    10145
+  ],
+  "routers": [
+    {
+      "domain": "xds:///tesseract-hub-search-prerank-01.api.vip.com",
+      "tess_timeout": 100,
+      "hub_base_request": {
+        "base": {
+          "req_id": "4848038870195252876",
+          "scene": "search_list",
+          "versions": [
+            "search_hub_prk_03"
+          ],
+          "flow_name": "prerank",
+          "api": "rank",
+          "uid": 69644041,
+          "mid": "83dd0764bacc8eaa0bf41ab542fe963bbe8b057f",
+          "sub_scene": "search-more-page",
+          "traffic_type": 2,
+          "app_abt_id": "1010005",
+          "exp_scene_id": "1010174",
+          "dispatcher": "search_hub_prk_03"
+        },
+        "options": {
+          "abt_info": [
+            {
+              "key": "merger3_support_strategy",
+              "value": "3"
+            },
+            {
+              "key": "merger3_prerank_pid_support_size_prerank",
+              "value": "90"
+            },
+            {
+              "key": "merger3_prerank_old_support_size",
+              "value": "300"
+            },
+            {
+              "key": "merger3_creative_enabled",
+              "value": "1"
+            },
+            {
+              "key": "merger3_creative_max_image_size_prerank",
+              "value": "1"
+            },
+            {
+              "key": "merger3_mixer_enabled_prerank",
+              "value": "1"
+            },
+            {
+              "key": "merger3_prerank_old_support_size_prerank",
+              "value": "300"
+            },
+            {
+              "key": "merger3_creative_max_image_size",
+              "value": "1"
+            },
+            {
+              "key": "merger3_creative_in",
+              "value": "30000"
+            },
+            {
+              "key": "merger3_creative_dispatcher",
+              "value": "search_v3"
+            },
+            {
+              "key": "merger3_mixer_rule_id",
+              "value": "1528"
+            },
+            {
+              "key": "merger3_creative_in_prerank",
+              "value": "30000"
+            },
+            {
+              "key": "merger3_mixer_enabled",
+              "value": "1"
+            },
+            {
+              "key": "merger3_creative_enabled_prerank",
+              "value": "1"
+            },
+            {
+              "key": "merger3_in",
+              "value": "10000"
+            },
+            {
+              "key": "merger3_prerank_pid_support_size",
+              "value": "90"
+            },
+            {
+              "key": "merger3_mid_shard_prerank",
+              "value": "6"
+            },
+            {
+              "key": "merger3_abtid",
+              "value": "100216439"
+            },
+            {
+              "key": "merger3_mixer_rule_id_prerank",
+              "value": "1528"
+            },
+            {
+              "key": "merger3_mid_shard",
+              "value": "6"
+            },
+            {
+              "key": "merger3_support_strategy_prerank",
+              "value": "3"
+            },
+            {
+              "key": "merger3_dispatcher",
+              "value": "search_hub_prk_03"
+            },
+            {
+              "key": "merger3_creative_tag",
+              "value": "search_image_v3"
+            },
+            {
+              "key": "merger3_in_prerank",
+              "value": "10000"
+            }
+          ]
+        }
+      },
+      "model_outputs": [
+        {
+          "key": "p_rank",
+          "value": 1
+        },
+        {
+          "key": "p_rank_2",
+          "value": 0
+        }
+      ]
+    }
+  ],
+  "model_raw_score_enabled": true,
+  "extras": [
+    {
+      "key": "flow",
+      "value": "prerank"
+    },
+    {
+      "key": "out",
+      "value": "10000"
+    },
+    {
+      "key": "in",
+      "value": "10000"
+    }
+  ]
+}

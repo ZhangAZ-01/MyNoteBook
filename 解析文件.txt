@@ -1,0 +1,47 @@
+#include <glog/logging.h>
+#include <fstream>
+#include <iostream>
+#include <string>
+#include "tesseract/merger_idls/featurestore/store.pb.h"
+
+namespace merger {
+
+bool ReadFile(const std::string& file_path, std::string* out) {
+  std::ifstream ifs(file_path, std::ios::binary | std::ios::ate);
+  if (!ifs) {
+    return false;
+  }
+  std::ifstream::pos_type pos = ifs.tellg();
+  if (pos == std::ifstream::pos_type(-1)) {
+    return false;
+  }
+  out->resize(static_cast<size_t>(pos));
+  ifs.seekg(0, std::ios::beg);
+  ifs.read(out->data(), out->size());
+  if (!ifs) {
+    return false;
+  }
+  return true;
+}
+bool LoadStoreResponse(const std::string& file_path, featurestore::StoreResponse* response) {
+  std::string bin;
+  if (!ReadFile(file_path, &bin)) return false;
+  if (!response->ParseFromString(bin)) {
+    return false;
+  }
+  return true;
+}
+
+int main(int, char* argv[]) {
+  const std::string file_name = argv[1];
+
+  featurestore::StoreResponse resp;
+  if (!LoadStoreResponse(file_name, &resp)) {
+    return 1;
+  }
+  LOG(INFO) << resp.DebugString();
+  return 0;
+}
+}  // namespace merger
+
+int main(int argc, char* argv[]) { return merger::main(argc, argv); }

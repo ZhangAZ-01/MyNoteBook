@@ -1,0 +1,304 @@
+// Copyright 2025 Vipshop Inc. All Rights Reserved.
+// Author: Aizhen Zhang (aizhen01.zhang@vipshop.com)
+//
+
+#pragma once
+
+#include <parallel_hashmap/phmap.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <algorithm>
+#include <atomic>
+#include <future>
+#include <string>
+#include <utility>
+#include <vector>
+#include "carbon/concurrent/thread_pool.h"
+#include "search/search_statistic.pb.h"
+#include "tesseract/merger3/metric/metric.h"
+
+namespace merger {
+    /************************************************************************/
+    /* Statistic */
+    /************************************************************************/
+class Statistic {
+ public:
+  using u64_vector_t = std: :vector<uint64_t>;
+  using slice_t = std: :pair<size_t, size_t>;
+  using slices_t = std: :vector<slice_t>;
+
+  using item_map_t = phmap: :flat_hash_map<uint64_t,
+        : :search: :StatisticItem*>;
+
+ public:
+  using clock_t = std: :chrono: :steady_clock;
+  using timepoint_t = clock_t: :time_point;
+
+ public:
+  inline static const size_t METRICS_INTERVAL = 1000; // hard code
+
+ private:
+  inline static std: :atomic<size_t> async_count_ = 0;
+
+ public:
+        // input: UserPreferStat bytes
+        // output: 经过 userdata.keys 过滤保留后的 UserPreferStat bytes
+  void U2IProcess(const std: :string& input, const u64_vector_t& userdata, size_t batch_size,
+                  carbon: :ThreadPool* thread_pool, std: :string* output, std: :string_view req_id) {
+    thread_local : :search: :UserPreferStat ups;
+    if (!ups.ParseFromString(input)) {
+      return;
+            }
+
+#if 1
+    timepoint_t start = clock_t: :now();
+
+    auto& ubcp = *ups.mutable_user_brand_cat3_prefer();
+    item_map_t ubcp_map(ubcp.size());
+    for (auto& [k, v
+            ] : ubcp) {
+      ubcp_map[k
+                ] = &v;
+            }
+    double prepare_map_time = std: :chrono: :duration_cast<std: :chrono: :microseconds>(clock_t: :now() - start).count();
+
+    : :search: :UserPreferStat ups_tmp;
+    auto& result_map = *ups_tmp.mutable_user_brand_cat3_prefer();
+    FilterAndMerge(ubcp_map, userdata, batch_size, thread_pool, &result_map, prepare_map_time,
+            "u2i", req_id);
+
+#else
+    timepoint_t start = clock_t: :now();
+    size_t total = userdata.size();
+    size_t slice_count = (total + batch_size - 1) / batch_size;
+    size_t begin = 0, end = 0;
+
+    auto& ubcp = *ups.mutable_user_brand_cat3_prefer();
+    item_map_t ubcp_map(ubcp.size());
+    for (auto& [k, v
+            ] : ubcp) {
+      ubcp_map[k
+                ] = &v;
+            }
+    double prepare_map_time = std: :chrono: :duration_cast<std: :chrono: :microseconds>(clock_t: :now() - start).count();
+
+    timepoint_t async_start = clock_t: :now();
+    std: :vector<std: :promise<item_map_t>> promises(slice_count);
+    for (size_t curr_slice = 0; curr_slice < slice_count; ++curr_slice) {
+      begin = curr_slice * batch_size;
+      end = std: :min(begin + batch_size, total);
+
+      if (++async_count_ == METRICS_INTERVAL) {
+        async_count_ = 0;
+        ReportMetric(METRIC_TYPE_ASYNC_TASK_QUEUE_SIZE,
+                    {
+                        {
+                            "thread_name",
+                            "u2i_pool"
+                        }
+                    },
+                     thread_pool->GetPendingTaskSize());
+                }
+
+      auto& promise = promises[curr_slice
+                ];
+      thread_pool->Post([&ubcp_map, &userdata, &promise, begin, end
+                ]() {
+        item_map_t ups_partial;
+        for (size_t i = begin; i < end; ++i) {
+          if (auto it = ubcp_map.find(userdata[i
+                        ]); it != ubcp_map.end()) {
+            ups_partial[it->first
+                            ] = std: :move(it->second);
+                        }
+                    }
+        promise.set_value(std: :move(ups_partial));
+                });
+            }
+    double async_time = std: :chrono: :duration_cast<std: :chrono: :microseconds>(clock_t: :now() - async_start).count();
+
+    timepoint_t merge_start = clock_t: :now();
+    : :search: :UserPreferStat ups_tmp;
+    for (auto& promise : promises) {
+      auto ups = promise.get_future().get();
+      for (const auto& [k, v
+                ] : ups) {
+        (*ups_tmp.mutable_user_brand_cat3_prefer())[k
+                    ] = std: :move(*v);
+                }
+            }
+    double merge_time = std: :chrono: :duration_cast<std: :chrono: :microseconds>(clock_t: :now() - merge_start).count();
+#endif
+    ups_tmp.set_user_id(ups.user_id());
+    ups_tmp.set_version(ups.version());
+    ups_tmp.set_did(ups.did());
+    ups_tmp.SerializeToString(output);
+
+    // LOG(INFO) << "u2i input size:" << ubcp.size() << ", output size:" << ups_tmp.user_brand_cat3_prefer().size()
+            //           << ", userdata_size:" << userdata.size() << ", slice_count:" << slice_count
+            //           << ", prepare_map_time:" << prepare_map_time << ", async_time:" << async_time
+            //           << ", merge_time:" << merge_time;
+    return;
+        }
+        // input: QueryPreferStat bytes
+        // output: 经过 userdata.keys 过滤保留后的 QueryPreferStat bytes
+  void Q2IProcess(const std: :string& input, const u64_vector_t& userdata, size_t batch_size,
+                  carbon: :ThreadPool* thread_pool, std: :string* output, std: :string_view req_id) {
+    thread_local : :search: :QueryPreferStat qps;
+    if (!qps.ParseFromString(input)) {
+      return;
+            }
+
+#if 1
+    timepoint_t start = clock_t: :now();
+
+    auto& qsp = *qps.mutable_query_spu_prefer();
+    item_map_t qsp_map(qsp.size());
+    for (auto& [k, v
+            ] : qsp) {
+      qsp_map[k
+                ] = &v;
+            }
+    double prepare_map_time = std: :chrono: :duration_cast<std: :chrono: :microseconds>(clock_t: :now() - start).count();
+
+    : :search: :QueryPreferStat qps_tmp;
+    auto& result_map = *qps_tmp.mutable_query_spu_prefer();
+    FilterAndMerge(qsp_map, userdata, batch_size, thread_pool, &result_map, prepare_map_time,
+            "q2i", req_id);
+#else
+
+    timepoint_t start = clock_t: :now();
+    size_t total = userdata.size();
+    size_t slice_count = (total + batch_size - 1) / batch_size;
+    size_t begin = 0, end = 0;
+
+    auto& qsp = *qps.mutable_query_spu_prefer();
+    item_map_t qsp_map(qsp.size());
+    for (auto& [k, v
+            ] : qsp) {
+      qsp_map[k
+                ] = &v;
+            }
+    double prepare_map_time = std: :chrono: :duration_cast<std: :chrono: :microseconds>(clock_t: :now() - start).count();
+
+    timepoint_t async_start = clock_t: :now();
+    std: :vector<std: :promise<item_map_t>> promises(slice_count);
+    for (size_t curr_slice = 0; curr_slice < slice_count; ++curr_slice) {
+      begin = curr_slice * batch_size;
+      end = std: :min(begin + batch_size, total);
+
+      if (++async_count_ == METRICS_INTERVAL) {
+        async_count_ = 0;
+        ReportMetric(METRIC_TYPE_ASYNC_TASK_QUEUE_SIZE,
+                    {
+                        {
+                            "thread_name",
+                            "q2i_pool"
+                        }
+                    },
+                     thread_pool->GetPendingTaskSize());
+                }
+
+      auto& promise = promises[curr_slice
+                ];
+      thread_pool->Post([&qsp_map, &userdata, &promise, begin, end
+                ]() {
+        item_map_t qps_partial;
+        for (size_t i = begin; i < end; ++i) {
+          if (auto it = qsp_map.find(userdata[i
+                        ]); it != qsp_map.end()) {
+            qps_partial[it->first
+                            ] = it->second;
+                        }
+                    }
+        promise.set_value(std: :move(qps_partial));
+                });
+            }
+    double async_time = std: :chrono: :duration_cast<std: :chrono: :microseconds>(clock_t: :now() - async_start).count();
+
+    timepoint_t merge_start = clock_t: :now();
+    : :search: :QueryPreferStat qps_tmp;
+    for (auto& promise : promises) {
+      auto qps = promise.get_future().get();
+      for (const auto& [k, v
+                ] : qps) {
+        (*qps_tmp.mutable_query_spu_prefer())[k
+                    ] = std: :move(*v);
+        (*qps_tmp.mutable_query_spu_prefer())[k
+                    ] = *v;
+                }
+            }
+    double merge_time = std: :chrono: :duration_cast<std: :chrono: :microseconds>(clock_t: :now() - merge_start).count();
+#endif
+    qps_tmp.set_processed_query(qps.processed_query());
+    qps_tmp.set_version(qps.version());
+    qps_tmp.set_did(qps.did());
+    qps_tmp.SerializeToString(output);
+
+    // LOG(INFO) << "q2i input size:" << qsp.size() << ", output size:" << qps_tmp.query_spu_prefer().size()
+            //           << ", userdata_size:" << userdata.size() << ", slice_count:" << slice_count
+            //           << ", prepare_map_time:" << prepare_map_time << ", async_time:" << async_time
+            //           << ", merge_time:" << merge_time;
+
+    return;
+        }
+
+ private:
+  template <typename T>
+  static void FilterAndMerge(const item_map_t& item_map, const u64_vector_t& userdata, size_t batch_size,
+                             carbon: :ThreadPool* thread_pool, T* output, double prepare_map_time, std: :string_view x2i,
+                             std: :string_view req_id) {
+    size_t total = userdata.size();
+    size_t s = (total + batch_size - 1) / batch_size;
+
+    timepoint_t async_start = clock_t: :now();
+    size_t begin = 0, end = 0;
+    std: :vector<std: :promise<item_map_t>> promises(s);
+    for (size_t curr_slice = 0; curr_slice < s; ++curr_slice) {
+      begin = curr_slice * batch_size;
+      end = std: :min(begin + batch_size, total);
+
+      if (++async_count_ == METRICS_INTERVAL) {
+        async_count_ = 0;
+        ReportMetric(METRIC_TYPE_ASYNC_TASK_QUEUE_SIZE,
+                    {
+                        {
+                            "thread_name",
+                            "statistic_pool"
+                        }
+                    },
+                     thread_pool->GetPendingTaskSize());
+                }
+
+      auto& promise = promises[curr_slice
+                ];
+      thread_pool->Post([&item_map, &userdata, &promise, begin, end
+                ]() {
+        item_map_t result;
+        result.reserve(userdata.size());
+        for (size_t i = begin; i < end; ++i) {
+          if (auto it = item_map.find(userdata[i
+                        ]); it != item_map.end()) {
+            result[it->first
+                            ] = it->second;
+                        }
+                    }
+        promise.set_value(std: :move(result));
+                });
+            }
+
+    for (auto& promise : promises) {
+      auto result = promise.get_future().get();
+      for (const auto& [k, v
+                ] : result) {
+        (*output)[k
+                    ] = *v;
+                }
+            }
+    double merge_time = std: :chrono: :duration_cast<std: :chrono: :microseconds>(clock_t: :now() - async_start).count();
+    LOG(INFO) << x2i << " input size:" << item_map.size() << ", output size:" << output->size()
+              << ", userdata_size:" << userdata.size() << ", slice_count:" << s
+              << ", prepare_map_time:" << prepare_map_time << ", async_time:" << merge_time << ", req_id:" << req_id;
+        }
+    };
+} // namespace merger

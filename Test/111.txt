@@ -1,0 +1,209 @@
+I[17:24:50.625] Apple clangd version 17.0.0 (clang-1700.0.13.5)
+I[17:24:50.632] Features: mac+xpc
+I[17:24:50.632] PID: 91737
+I[17:24:50.632] Working directory: /Users/aizhen01.zhang/Code/new_merger_build/merger_build
+I[17:24:50.632] argv[0]: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clangd
+I[17:24:50.635] Starting LSP over stdin/stdout
+I[17:24:50.646] <-- initialize(0)
+I[17:24:50.743] --> reply:initialize(0) 96 ms
+I[17:24:50.893] <-- initialized
+I[17:24:50.956] <-- textDocument/didOpen
+I[17:24:50.971] <-- textDocument/codeAction(1)
+I[17:24:50.971] <-- textDocument/documentLink(2)
+I[17:24:50.971] <-- textDocument/inlayHint(3)
+I[17:24:50.971] <-- $/cancelRequest
+I[17:24:50.971] <-- textDocument/documentLink(4)
+I[17:24:51.064] Loaded compilation database from /Users/aizhen01.zhang/Code/new_merger_build/merger_build/compile_commands.json
+I[17:24:51.066] ASTWorker building file /Users/aizhen01.zhang/Code/new_merger_build/merger_build/tesseract/merger3/flow/redis.h version 1 with command 
+[/private/var/tmp/_bazel_aizhen01.zhang/65335b94604b285f4bf86f6597763537/execroot/__main__]
+external/local_config_cc/wrapped_clang_pp -D_FORTIFY_SOURCE=1 -fstack-protector -fcolor-diagnostics -Wall -Wthread-safety -Wself-assign -fno-omit-frame-pointer -g -std=c++11 -F__BAZEL_XCODE_SDKROOT__/System/Library/Frameworks -F__BAZEL_XCODE_DEVELOPER_DIR__/Platforms/MacOSX.platform/Developer/Library/Frameworks -no-canonical-prefixes -pthread -g -O3 -DNDEBUG -pthread -D__STDC_FORMAT_MACROS=1 -Wno-deprecated-declarations -no-canonical-prefixes -Wno-builtin-macro-redefined -D__DATE__=redacted -D__TIMESTAMP__=redacted -D__TIME__=redacted -target arm64-apple-macosx15.5 -DCARES_STATICLIB -DASIO_STANDALONE=1 -DASIO_DISABLE_STD_ALIGNED_ALLOC=1 -isystem external/com_github_google_glog/include -isystem bazel-out/darwin_arm64-dbg/bin/external/com_github_google_glog/include -isystem external/com_github_gflags_gflags/include -isystem bazel-out/darwin_arm64-dbg/bin/external/com_github_gflags_gflags/include -isystem external/parallel_hashmap/include -isystem bazel-out/darwin_arm64-dbg/bin/external/parallel_hashmap/include -isystem infra/mercury-client-cpp/grpc_tracer/include -isystem bazel-out/darwin_arm64-dbg/bin/infra/mercury-client-cpp/grpc_tracer/include -isystem external/concurrentqueue/include -isystem bazel-out/darwin_arm64-dbg/bin/external/concurrentqueue/include -isystem external/civetweb/include -isystem bazel-out/darwin_arm64-dbg/bin/external/civetweb/include -isystem external/com_github_grpc_grpc/include -isystem bazel-out/darwin_arm64-dbg/bin/external/com_github_grpc_grpc/include -isystem external/com_github_grpc_grpc/src/core/ext/upb-generated -isystem bazel-out/darwin_arm64-dbg/bin/external/com_github_grpc_grpc/src/core/ext/upb-generated -isystem external/com_github_grpc_grpc/src/core/ext/upbdefs-generated -isystem bazel-out/darwin_arm64-dbg/bin/external/com_github_grpc_grpc/src/core/ext/upbdefs-generated -isystem external/zlib/include -isystem bazel-out/darwin_arm64-dbg/bin/external/zlib/include -isystem external/com_github_grpc_grpc/third_party/xxhash -isystem bazel-out/darwin_arm64-dbg/bin/external/com_github_grpc_grpc/third_party/xxhash -isystem external/com_github_grpc_grpc/third_party/address_sorting/include -isystem bazel-out/darwin_arm64-dbg/bin/external/com_github_grpc_grpc/third_party/address_sorting/include -isystem external/com_github_cares_cares/include -isystem bazel-out/darwin_arm64-dbg/bin/external/com_github_cares_cares/include -isystem external/com_github_cares_cares -isystem bazel-out/darwin_arm64-dbg/bin/external/com_github_cares_cares -isystem external/boringssl/src/include -isystem bazel-out/darwin_arm64-dbg/bin/external/boringssl/src/include -isystem external/com_google_protobuf/src -isystem bazel-out/darwin_arm64-dbg/bin/external/com_google_protobuf/src -isystem external/io_opentelemetry_cpp/api/include -isystem bazel-out/darwin_arm64-dbg/bin/external/io_opentelemetry_cpp/api/include -isystem external/io_opentelemetry_cpp/exporters/otlp/include -isystem bazel-out/darwin_arm64-dbg/bin/external/io_opentelemetry_cpp/exporters/otlp/include -isystem external/io_opentelemetry_cpp/sdk/include -isystem bazel-out/darwin_arm64-dbg/bin/external/io_opentelemetry_cpp/sdk/include -isystem external/io_opentelemetry_cpp/ext/include -isystem bazel-out/darwin_arm64-dbg/bin/external/io_opentelemetry_cpp/ext/include -isystem external/asio/include -isystem bazel-out/darwin_arm64-dbg/bin/external/asio/include -isystem external/redis_plus_plus/include -isystem bazel-out/darwin_arm64-dbg/bin/external/redis_plus_plus/include -isystem external/hiredis/include -isystem bazel-out/darwin_arm64-dbg/bin/external/hiredis/include -isystem external/libuv/include -isystem bazel-out/darwin_arm64-dbg/bin/external/libuv/include -isystem external/lz4/include -isystem bazel-out/darwin_arm64-dbg/bin/external/lz4/include -isystem external/snappy/include -isystem bazel-out/darwin_arm64-dbg/bin/external/snappy/include -isystem external/json/single_include -isystem bazel-out/darwin_arm64-dbg/bin/external/json/single_include -isystem external/librdkafka/include -isystem bazel-out/darwin_arm64-dbg/bin/external/librdkafka/include -isystem external/antlr4/runtime/Cpp/runtime/src -isystem bazel-out/darwin_arm64-dbg/bin/external/antlr4/runtime/Cpp/runtime/src -isystem external/antlr4/runtime/Cpp/runtime/src/atn -isystem bazel-out/darwin_arm64-dbg/bin/external/antlr4/runtime/Cpp/runtime/src/atn -isystem external/antlr4/runtime/Cpp/runtime/src/dfa -isystem bazel-out/darwin_arm64-dbg/bin/external/antlr4/runtime/Cpp/runtime/src/dfa -isystem external/antlr4/runtime/Cpp/runtime/src/misc -isystem bazel-out/darwin_arm64-dbg/bin/external/antlr4/runtime/Cpp/runtime/src/misc -isystem external/antlr4/runtime/Cpp/runtime/src/support -isystem bazel-out/darwin_arm64-dbg/bin/external/antlr4/runtime/Cpp/runtime/src/support -isystem external/antlr4/runtime/Cpp/runtime/src/tree -isystem bazel-out/darwin_arm64-dbg/bin/external/antlr4/runtime/Cpp/runtime/src/tree -isystem external/antlr4/runtime/Cpp/runtime/src/tree/pattern -isystem bazel-out/darwin_arm64-dbg/bin/external/antlr4/runtime/Cpp/runtime/src/tree/pattern -isystem external/antlr4/runtime/Cpp/runtime/src/tree/xpath -isystem bazel-out/darwin_arm64-dbg/bin/external/antlr4/runtime/Cpp/runtime/src/tree/xpath -isystem external/zstd/lib -isystem bazel-out/darwin_arm64-dbg/bin/external/zstd/lib -isystem external/xxhash/include -isystem bazel-out/darwin_arm64-dbg/bin/external/xxhash/include -isystem external/boost/include -isystem bazel-out/darwin_arm64-dbg/bin/external/boost/include -isystem external/rocksdb/include -isystem bazel-out/darwin_arm64-dbg/bin/external/rocksdb/include -isystem external/libarchive/include -isystem bazel-out/darwin_arm64-dbg/bin/external/libarchive/include -Ibazel-out/darwin_arm64-dbg/bin/external/io_opentelemetry_cpp/sdk/src/resource/_virtual_includes/resource -Ibazel-out/darwin_arm64-dbg/bin/external/io_opentelemetry_cpp/sdk/src/trace/_virtual_includes/trace -Ibazel-out/darwin_arm64-dbg/bin/external/io_opentelemetry_cpp/sdk/src/common/_virtual_includes/random -Ibazel-out/darwin_arm64-dbg/bin/external/io_opentelemetry_cpp/sdk/src/common/platform/_virtual_includes/fork -Ibazel-out/darwin_arm64-dbg/bin/tesseract/tesseract_entity_idls/legacy_idls/_virtual_includes/entity_legacy_proto -Ibazel-out/darwin_arm64-dbg/bin/tesseract/tesseract_entity_idls/common/_virtual_includes/common_proto -Ibazel-out/darwin_arm64-dbg/bin/external/com_google_protobuf/_virtual_includes/any_proto -Ibazel-out/darwin_arm64-dbg/bin/external/com_google_protobuf/_virtual_includes/wrappers_proto -Ibazel-out/darwin_arm64-dbg/bin/tesseract/tesseract_entity_idls/rec/feeds/_virtual_includes/rec_feeds_proto -Ibazel-out/darwin_arm64-dbg/bin/external/com_github_google_flatbuffers/_virtual_includes/runtime_cc -Ibazel-out/darwin_arm64-dbg/bin/external/com_github_google_flatbuffers/_virtual_includes/flatbuffers -Ibazel-out/darwin_arm64-dbg/bin/external/com_github_google_flatbuffers/src/_virtual_includes/flatbuffers -Ibazel-out/darwin_arm64-dbg/bin/external/com_github_google_flatbuffers/src/_virtual_includes/code_generators -Ibazel-out/darwin_arm64-dbg/bin/external/com_github_google_flatbuffers/src/_virtual_includes/generate_fbs -iquote . -iquote bazel-out/darwin_arm64-dbg/bin -iquote external/com_github_google_glog -iquote bazel-out/darwin_arm64-dbg/bin/external/com_github_google_glog -iquote external/com_github_gflags_gflags -iquote bazel-out/darwin_arm64-dbg/bin/external/com_github_gflags_gflags -iquote external/parallel_hashmap -iquote bazel-out/darwin_arm64-dbg/bin/external/parallel_hashmap -iquote external/concurrentqueue -iquote bazel-out/darwin_arm64-dbg/bin/external/concurrentqueue -iquote external/civetweb -iquote bazel-out/darwin_arm64-dbg/bin/external/civetweb -iquote external/com_github_grpc_grpc -iquote bazel-out/darwin_arm64-dbg/bin/external/com_github_grpc_grpc -iquote external/com_google_googleapis -iquote bazel-out/darwin_arm64-dbg/bin/external/com_google_googleapis -iquote external/upb -iquote bazel-out/darwin_arm64-dbg/bin/external/upb -iquote external/com_google_protobuf -iquote bazel-out/darwin_arm64-dbg/bin/external/com_google_protobuf -iquote external/com_google_absl -iquote bazel-out/darwin_arm64-dbg/bin/external/com_google_absl -iquote external/zlib -iquote bazel-out/darwin_arm64-dbg/bin/external/zlib -iquote external/com_github_cncf_udpa -iquote bazel-out/darwin_arm64-dbg/bin/external/com_github_cncf_udpa -iquote external/com_envoyproxy_protoc_gen_validate -iquote bazel-out/darwin_arm64-dbg/bin/external/com_envoyproxy_protoc_gen_validate -iquote external/com_github_cares_cares -iquote bazel-out/darwin_arm64-dbg/bin/external/com_github_cares_cares -iquote external/boringssl -iquote bazel-out/darwin_arm64-dbg/bin/external/boringssl -iquote external/envoy_api -iquote bazel-out/darwin_arm64-dbg/bin/external/envoy_api -iquote external/opencensus_proto -iquote bazel-out/darwin_arm64-dbg/bin/external/opencensus_proto -iquote external/com_googlesource_code_re2 -iquote bazel-out/darwin_arm64-dbg/bin/external/com_googlesource_code_re2 -iquote external/io_opentelemetry_cpp -iquote bazel-out/darwin_arm64-dbg/bin/external/io_opentelemetry_cpp -iquote external/com_github_opentelemetry_proto -iquote bazel-out/darwin_arm64-dbg/bin/external/com_github_opentelemetry_proto -iquote external/asio -iquote bazel-out/darwin_arm64-dbg/bin/external/asio -iquote external/redis_plus_plus -iquote bazel-out/darwin_arm64-dbg/bin/external/redis_plus_plus -iquote external/hiredis -iquote bazel-out/darwin_arm64-dbg/bin/external/hiredis -iquote external/libuv -iquote bazel-out/darwin_arm64-dbg/bin/external/libuv -iquote external/lz4 -iquote bazel-out/darwin_arm64-dbg/bin/external/lz4 -iquote external/snappy -iquote bazel-out/darwin_arm64-dbg/bin/external/snappy -iquote external/json -iquote bazel-out/darwin_arm64-dbg/bin/external/json -iquote external/librdkafka -iquote bazel-out/darwin_arm64-dbg/bin/external/librdkafka -iquote external/antlr4 -iquote bazel-out/darwin_arm64-dbg/bin/external/antlr4 -iquote external/zstd -iquote bazel-out/darwin_arm64-dbg/bin/external/zstd -iquote external/xxhash -iquote bazel-out/darwin_arm64-dbg/bin/external/xxhash -iquote external/boost -iquote bazel-out/darwin_arm64-dbg/bin/external/boost -iquote external/rocksdb -iquote bazel-out/darwin_arm64-dbg/bin/external/rocksdb -iquote external/libarchive -iquote bazel-out/darwin_arm64-dbg/bin/external/libarchive -iquote external/com_github_google_flatbuffers -iquote bazel-out/darwin_arm64-dbg/bin/external/com_github_google_flatbuffers -x c++-header -Wall -Wextra -Werror -pedantic -pthread -std=c++17 -c -resource-dir=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk -- /Users/aizhen01.zhang/Code/new_merger_build/merger_build/tesseract/merger3/flow/redis.h
+I[17:24:51.069] --> textDocument/clangd.fileStatus
+I[17:24:51.102] <-- $/cancelRequest
+I[17:24:51.102] <-- textDocument/codeAction(5)
+I[17:24:51.102] <-- $/cancelRequest
+I[17:24:51.102] <-- textDocument/foldingRange(6)
+I[17:24:51.102] <-- textDocument/documentLink(7)
+I[17:24:51.102] <-- $/cancelRequest
+I[17:24:51.103] --> reply:textDocument/foldingRange(6) 0 ms
+I[17:24:51.337] <-- textDocument/foldingRange(8)
+I[17:24:51.338] --> reply:textDocument/foldingRange(8) 0 ms
+I[17:24:51.368] <-- $/cancelRequest
+I[17:24:51.369] <-- $/cancelRequest
+I[17:24:51.369] <-- textDocument/codeAction(9)
+I[17:24:51.374] <-- textDocument/documentLink(10)
+I[17:24:51.397] <-- textDocument/semanticTokens/full(11)
+I[17:24:51.401] <-- textDocument/documentSymbol(12)
+I[17:24:51.649] <-- $/cancelRequest
+I[17:24:51.770] <-- $/cancelRequest
+I[17:24:51.770] <-- textDocument/codeAction(13)
+I[17:24:51.831] <-- $/cancelRequest
+I[17:24:51.832] <-- textDocument/documentLink(14)
+I[17:24:51.931] <-- textDocument/documentSymbol(15)
+I[17:24:52.170] <-- $/setTrace
+I[17:24:52.170] unhandled notification $/setTrace
+I[17:24:52.176] <-- $/cancelRequest
+I[17:24:52.176] <-- $/cancelRequest
+I[17:24:52.224] <-- textDocument/documentLink(16)
+I[17:24:52.224] <-- textDocument/inlayHint(17)
+I[17:24:52.224] <-- textDocument/documentSymbol(18)
+I[17:24:52.790] <-- $/cancelRequest
+I[17:24:52.790] <-- textDocument/codeAction(19)
+I[17:24:53.113] <-- $/cancelRequest
+I[17:24:53.113] <-- textDocument/codeAction(20)
+I[17:24:53.113] <-- $/cancelRequest
+I[17:24:53.113] <-- textDocument/codeAction(21)
+I[17:24:53.114] <-- $/cancelRequest
+I[17:24:53.114] <-- textDocument/codeAction(22)
+I[17:24:53.874] <-- $/cancelRequest
+I[17:24:53.874] <-- $/cancelRequest
+I[17:24:53.874] <-- textDocument/documentSymbol(23)
+I[17:24:54.175] <-- textDocument/documentSymbol(24)
+I[17:24:55.084] <-- $/cancelRequest
+I[17:24:55.084] <-- $/cancelRequest
+I[17:24:55.084] <-- textDocument/documentSymbol(25)
+I[17:24:55.126] <-- $/cancelRequest
+I[17:24:55.127] <-- textDocument/inlayHint(26)
+I[17:24:55.385] <-- textDocument/documentSymbol(27)
+I[17:24:56.357] Built preamble of size 62034604 for file /Users/aizhen01.zhang/Code/new_merger_build/merger_build/tesseract/merger3/flow/redis.h version 1 in 5.29 seconds
+I[17:24:56.359] Indexing c++17 standard library in the context of /Users/aizhen01.zhang/Code/new_merger_build/merger_build/tesseract/merger3/flow/redis.h
+I[17:24:56.360] --> workspace/semanticTokens/refresh(0)
+I[17:24:56.360] <-- reply(0)
+E[17:24:56.367] tidy-config error at /Users/aizhen01.zhang/Code/new_merger_build/merger_build/tesseract/merger3/.clang-tidy:21:0: unknown key 'AnalyzeTemporaryDtors'
+E[17:24:56.367] Error parsing clang-tidy configuration in /Users/aizhen01.zhang/Code/new_merger_build/merger_build/tesseract/merger3/.clang-tidy: Invalid argument
+I[17:24:56.487] --> textDocument/publishDiagnostics
+I[17:24:56.487] --> textDocument/inactiveRegions
+I[17:24:56.488] --> reply:textDocument/codeAction(1) 5517 ms, error: Task was cancelled.
+I[17:24:56.488] --> reply:textDocument/documentLink(2) 5517 ms, error: Task was cancelled.
+I[17:24:56.488] --> reply:textDocument/inlayHint(3) 5517 ms, error: Task was cancelled.
+I[17:24:56.488] --> reply:textDocument/documentLink(4) 5517 ms, error: Task was cancelled.
+I[17:24:56.488] --> reply:textDocument/codeAction(5) 5386 ms, error: Task was cancelled.
+I[17:24:56.488] --> reply:textDocument/documentLink(7) 5386 ms, error: Task was cancelled.
+I[17:24:56.488] --> reply:textDocument/codeAction(9) 5119 ms, error: Task was cancelled.
+I[17:24:56.488] --> reply:textDocument/documentLink(10) 5114 ms, error: Task was cancelled.
+I[17:24:56.489] --> reply:textDocument/semanticTokens/full(11) 5092 ms
+I[17:24:56.489] --> reply:textDocument/documentSymbol(12) 5087 ms, error: Task was cancelled.
+I[17:24:56.489] --> reply:textDocument/codeAction(13) 4719 ms, error: Task was cancelled.
+I[17:24:56.489] --> reply:textDocument/documentLink(14) 4657 ms, error: Task was cancelled.
+I[17:24:56.489] --> reply:textDocument/documentSymbol(15) 4557 ms, error: Task was cancelled.
+I[17:24:56.489] --> reply:textDocument/documentLink(16) 4265 ms
+I[17:24:56.489] --> reply:textDocument/inlayHint(17) 4265 ms, error: Task was cancelled.
+I[17:24:56.489] --> reply:textDocument/documentSymbol(18) 4265 ms, error: Task was cancelled.
+I[17:24:56.489] --> reply:textDocument/codeAction(19) 3699 ms, error: Task was cancelled.
+I[17:24:56.489] --> reply:textDocument/codeAction(20) 3376 ms, error: Task was cancelled.
+I[17:24:56.489] --> reply:textDocument/codeAction(21) 3376 ms, error: Task was cancelled.
+I[17:24:56.490] --> reply:textDocument/codeAction(22) 3375 ms
+I[17:24:56.490] --> reply:textDocument/documentSymbol(23) 2615 ms, error: Task was cancelled.
+I[17:24:56.490] --> reply:textDocument/documentSymbol(24) 2314 ms, error: Task was cancelled.
+[Error - 17:24:56] Request textDocument/codeAction failed.
+[object Object]
+I[17:24:56.490] --> reply:textDocument/documentSymbol(25) 1405 ms
+[Error - 17:24:56] Request textDocument/documentLink failed.
+[object Object]
+I[17:24:56.491] --> reply:textDocument/inlayHint(26) 1364 ms
+I[17:24:56.491] --> reply:textDocument/documentSymbol(27) 1106 ms
+[Error - 17:24:56] Request textDocument/inlayHint failed.
+[object Object]
+I[17:24:56.492] --> textDocument/clangd.fileStatus
+[Error - 17:24:56] Request textDocument/documentLink failed.
+[object Object]
+[Error - 17:24:56] Request textDocument/codeAction failed.
+[object Object]
+[Error - 17:24:56] Request textDocument/documentLink failed.
+[object Object]
+[Error - 17:24:56] Request textDocument/codeAction failed.
+[object Object]
+[Error - 17:24:56] Request textDocument/documentLink failed.
+[object Object]
+[Error - 17:24:56] Request textDocument/documentSymbol failed.
+[object Object]
+[Error - 17:24:56] Request textDocument/codeAction failed.
+[object Object]
+[Error - 17:24:56] Request textDocument/documentLink failed.
+[object Object]
+[Error - 17:24:56] Request textDocument/documentSymbol failed.
+[object Object]
+[Error - 17:24:56] Request textDocument/inlayHint failed.
+[object Object]
+[Error - 17:24:56] Request textDocument/documentSymbol failed.
+[object Object]
+[Error - 17:24:56] Request textDocument/codeAction failed.
+[object Object]
+[Error - 17:24:56] Request textDocument/codeAction failed.
+[object Object]
+[Error - 17:24:56] Request textDocument/codeAction failed.
+[object Object]
+[Error - 17:24:56] Request textDocument/documentSymbol failed.
+[object Object]
+[Error - 17:24:56] Request textDocument/documentSymbol failed.
+[object Object]
+I[17:24:56.747] <-- textDocument/codeAction(28)
+I[17:24:56.750] --> reply:textDocument/codeAction(28) 3 ms
+I[17:24:56.750] --> textDocument/clangd.fileStatus
+I[17:24:57.301] <-- textDocument/foldingRange(29)
+I[17:24:57.302] --> reply:textDocument/foldingRange(29) 0 ms
+I[17:24:57.915] Indexed c++17 standard library: 10553 symbols, 2615 filtered
+I[17:24:58.176] <-- textDocument/codeAction(30)
+I[17:24:58.176] <-- $/cancelRequest
+I[17:24:58.176] <-- textDocument/codeAction(31)
+I[17:24:58.176] <-- $/cancelRequest
+I[17:24:58.176] <-- textDocument/codeAction(32)
+I[17:24:58.176] <-- $/cancelRequest
+I[17:24:58.176] <-- textDocument/codeAction(33)
+I[17:24:58.176] --> reply:textDocument/codeAction(30) 0 ms, error: Task was cancelled.
+I[17:24:58.177] --> reply:textDocument/codeAction(31) 0 ms, error: Task was cancelled.
+I[17:24:58.177] --> reply:textDocument/codeAction(32) 0 ms, error: Task was cancelled.
+I[17:24:58.177] --> reply:textDocument/codeAction(33) 0 ms
+I[17:24:58.177] --> textDocument/clangd.fileStatus
+[Error - 17:24:58] Request textDocument/codeAction failed.
+[object Object]
+[Error - 17:24:58] Request textDocument/codeAction failed.
+[object Object]
+[Error - 17:24:58] Request textDocument/codeAction failed.
+[object Object]
+I[17:25:00.160] <-- textDocument/semanticTokens/full/delta(34)
+I[17:25:00.161] --> reply:textDocument/semanticTokens/full/delta(34) 1 ms
+I[17:25:00.161] --> textDocument/clangd.fileStatus
+I[17:25:02.285] <-- textDocument/codeAction(35)
+I[17:25:02.286] --> reply:textDocument/codeAction(35) 1 ms
+I[17:25:02.286] --> textDocument/clangd.fileStatus
+I[17:25:02.902] <-- textDocument/codeAction(36)
+I[17:25:02.902] <-- $/cancelRequest
+I[17:25:02.902] <-- textDocument/codeAction(37)
+I[17:25:02.903] --> reply:textDocument/codeAction(36) 0 ms, error: Task was cancelled.
+I[17:25:02.903] --> reply:textDocument/codeAction(37) 0 ms
+I[17:25:02.903] --> textDocument/clangd.fileStatus
+[Error - 17:25:02] Request textDocument/codeAction failed.
+[object Object]
+I[17:25:03.878] <-- textDocument/inlayHint(38)
+I[17:25:03.882] --> reply:textDocument/inlayHint(38) 3 ms
+I[17:25:03.882] --> textDocument/clangd.fileStatus
+I[17:25:04.185] <-- textDocument/codeAction(39)
+I[17:25:04.185] <-- $/cancelRequest
+I[17:25:04.185] --> reply:textDocument/codeAction(39) 0 ms, error: Task was cancelled.
+I[17:25:04.185] <-- textDocument/codeAction(40)
+I[17:25:04.185] <-- $/cancelRequest
+I[17:25:04.185] <-- textDocument/codeAction(41)
+I[17:25:04.185] --> reply:textDocument/codeAction(40) 0 ms, error: Task was cancelled.
+I[17:25:04.185] --> reply:textDocument/codeAction(41) 0 ms
+I[17:25:04.185] --> textDocument/clangd.fileStatus
+[Error - 17:25:04] Request textDocument/codeAction failed.
+[object Object]
+[Error - 17:25:04] Request textDocument/codeAction failed.
+[object Object]
+I[17:25:05.634] <-- textDocument/inlayHint(42)
+I[17:25:05.635] --> reply:textDocument/inlayHint(42) 0 ms
+I[17:25:05.635] --> textDocument/clangd.fileStatus
+I[17:25:05.660] <-- textDocument/codeAction(43)
+I[17:25:05.661] --> reply:textDocument/codeAction(43) 1 ms
+I[17:25:05.661] --> textDocument/clangd.fileStatus
+I[17:25:05.677] <-- textDocument/codeAction(44)
+I[17:25:05.683] --> reply:textDocument/codeAction(44) 5 ms
+I[17:25:05.683] --> textDocument/clangd.fileStatus
+I[17:25:05.865] <-- textDocument/foldingRange(45)
+I[17:25:05.866] --> reply:textDocument/foldingRange(45) 0 ms
+I[17:25:08.187] <-- textDocument/semanticTokens/full/delta(46)
+I[17:25:08.188] --> reply:textDocument/semanticTokens/full/delta(46) 1 ms
+I[17:25:08.188] --> textDocument/clangd.fileStatus
+I[17:25:16.826] <-- textDocument/inlayHint(47)
+I[17:25:16.828] --> reply:textDocument/inlayHint(47) 1 ms
+I[17:25:16.828] --> textDocument/clangd.fileStatus

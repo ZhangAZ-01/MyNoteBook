@@ -6,10 +6,6 @@
 
 ```bash
 #! /bin/bash
-#
-# Copyright 2023 Vipshop Inc. All Rights Reserved.
-# Author: Yafei Zhang (yafei06.zhang@vipshop.com)
-#
 
 set -e  # 任何命令失败 脚本立即终止执行
 cd $(dirname $0)  # 确保脚本在该目录下进行
@@ -30,10 +26,6 @@ git clone git@gitlab.tools.vipshop.com:p13n_cxx/bazel_clang_tools.git
 
 ```bash
 #!/bin/bash
-#
-# Copyright 2023 Vipshop Inc. All Rights Reserved.
-# Author: Meng Ding (daemon.d@vipshop.com)
-#
 # 用于在 10.189.108.33 测试服上启动 staging 服务
 #
 
@@ -107,31 +99,18 @@ fi
 ### pom.xml
 
 - 基本项目信息
-
 - 属性设置
-
   - 设置编码格式，Google Protocol Buffers 库的版本号，指定 gRPC 版本号。
-
 - 依赖管理
-
 - 分发管理
-
   - 配置了用于发布项目的构建成果物的仓库地址。
-
 - 构建配置
-
   - resources: 指定资源文件的存放目录，表示可能包含一些接口定义文件。
-
   - finalName: 最终构建的 JAR 文件命名。
-
   - extensions: 引入了操作系统检测插件，用于根据操作系统类型自动配置一些参数。
-
   - plugins: 包括了编译插件和专用于处理 Protocol Buffers 和 gRPC 的插件：
-
   - maven-compiler-plugin: 配置了 Java 源代码的编译设置。
-
   - protobuf-maven-plugin: 自动处理 .proto 文件，生成相应的 Java 类和 gRPC 服务代码。
-
 - 插件具体配置
 
 这两个文件组成了一个完整的自动化构建和部署流程。
